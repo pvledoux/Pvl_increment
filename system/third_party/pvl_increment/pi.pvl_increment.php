@@ -123,8 +123,7 @@ class Pvl_increment
 
 			Pvl Increment v. 0.1
 
-			This plugin auto-increment itself on each call. I wrote that plugin because
-			I have a complex XML output to do for a channel.
+			This plugin auto-increment itself on each call.
 
 			Usage:
 
