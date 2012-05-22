@@ -12,7 +12,7 @@ $plugin_info = array(
   );
 
 /**
- * Copyright (c) 2011, Pv Ledoux
+ * Copyright (c) 2012, Pv Ledoux
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ $plugin_info = array(
 /**
  * Pvl_increment
  *
- * @copyright	Pv Ledoux 2011
+ * @copyright	Pv Ledoux 2012
  * @since		20 Dec 2011
  * @author		Pierre-Vincent Ledoux <ee-addons@pvledoux.be>
  * @link		http://www.twitter.com/pvledoux/
