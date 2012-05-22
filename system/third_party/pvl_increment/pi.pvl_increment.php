@@ -2,7 +2,7 @@
 
 $plugin_info = array(
 	'pi_name' => 'Pvl Increment',
-	'pi_version' => '0.1',
+	'pi_version' => '0.2',
 	'pi_author' =>'Pierre-Vincent Ledoux',
 	'pi_author_email' =>'ee-addons@pvledoux.be',
 	'pi_author_url' => 'http://twitter.com/pvledoux/',
@@ -70,13 +70,14 @@ class Pvl_increment
 	*/
 	public function __construct()
 	{
-		$this->_ee =& get_instance();
-		$this->_start = $this->_ee->TMPL->fetch_param('start', 1);
+		$this->_ee		=& get_instance();
+		$this->_start	= $this->_ee->TMPL->fetch_param('start', 1);
+		$this->_id		= $this->_ee->TMPL->fetch_param('id', 'default_increment');
 
 		// Init step
-		if ( ! ($this->_step = $this->_ee->session->cache(__CLASS__, 'step')) ) {
+		if ( ! ($this->_step = $this->_ee->session->cache(__CLASS__, $this->_id . '_step')) ) {
 			$this->_step = $this->_ee->TMPL->fetch_param('step', 1);
-			$this->_ee->session->set_cache(__CLASS__, 'step', $this->_step);
+			$this->_ee->session->set_cache(__CLASS__, $this->_id . '_step', $this->_step);
 		}
 
 		$this->return_data = $this->_run();
@@ -98,12 +99,12 @@ class Pvl_increment
 
 	private function _run()
 	{
-		if ( ! ($this->_increment = $this->_ee->session->cache(__CLASS__, 'increment')) ) {
+		if ( ! ($this->_increment = $this->_ee->session->cache(__CLASS__, $this->_id . '_increment')) ) {
 			$this->_increment = $this->_start;
 		} else {
 			$this->_increment = $this->_increment + $this->_step;
 		}
-		$this->_ee->session->set_cache(__CLASS__, 'increment', $this->_increment);
+		$this->_ee->session->set_cache(__CLASS__, $this->_id . '_increment', $this->_increment);
 		return $this->_increment;
 	}
 
@@ -121,22 +122,23 @@ class Pvl_increment
 	?>
 
 
-			Pvl Increment v. 0.1
+Pvl Increment v. 0.2
 
-			This plugin auto-increment itself on each call.
+This plugin auto-increment itself on each call.
 
-			Usage:
+Usage:
 
-			<p>1: {exp:pvl_increment [start="1" step="1"]}</p>
-			<p>2: {exp:pvl_increment random}</p>
-			<p>3: {exp:pvl_increment random}</p>
-			<p>4: {exp:pvl_increment random}</p>
+<p>1: {exp:pvl_increment [start="1" step="1"]}</p>
+<p>2: {exp:pvl_increment random}</p>
+<p>3: {exp:pvl_increment random}</p>
+<p>4: {exp:pvl_increment random}</p>
 
-			Parameters:
+Parameters:
 
-			random		is required in order to avoid tag caching (thanks to @Max_Lazar)
-			start="1"	is optional: define where to start incrementation (int, can be negative)
-			step="1"	is optional: define the incrementation step (int, can be negative)
+random		is required in order to avoid tag caching (thanks to @Max_Lazar)
+id 			is optional: it allows you to add many incremental loop in the same template
+start="1"	is optional: define where to start incrementation (int, can be negative)
+step="1"	is optional: define the incrementation step (int, can be negative)
 
 
 	 <?php
