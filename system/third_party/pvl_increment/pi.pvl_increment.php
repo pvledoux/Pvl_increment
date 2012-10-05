@@ -2,7 +2,7 @@
 
 $plugin_info = array(
 	'pi_name' => 'Pvl Increment',
-	'pi_version' => '0.2',
+	'pi_version' => '0.3',
 	'pi_author' =>'Pierre-Vincent Ledoux',
 	'pi_author_email' =>'ee-addons@pvledoux.be',
 	'pi_author_url' => 'http://twitter.com/pvledoux/',
@@ -57,11 +57,6 @@ class Pvl_increment
 	 */
 	public $return_data	= null;
 
-	private $_ee		= NULL;
-	private $_start		= 1;
-	private $_step		= 1;
-	private $_increment = FALSE;
-
 	/**
 	* Constructor.
 	*
@@ -70,17 +65,25 @@ class Pvl_increment
 	*/
 	public function __construct()
 	{
-		$this->_ee		=& get_instance();
-		$this->_start	= $this->_ee->TMPL->fetch_param('start', 1);
-		$this->_id		= $this->_ee->TMPL->fetch_param('id', 'default_increment');
+		static $step;
+		static $increment;
+
+		$ee				=& get_instance();
+		$start			= $ee->TMPL->fetch_param('start', 1);
+		$increment_id	= $ee->TMPL->fetch_param('id', 'default_increment');
 
 		// Init step
-		if ( ! ($this->_step = $this->_ee->session->cache(__CLASS__, $this->_id . '_step')) ) {
-			$this->_step = $this->_ee->TMPL->fetch_param('step', 1);
-			$this->_ee->session->set_cache(__CLASS__, $this->_id . '_step', $this->_step);
+		if ( ! isset($step[$increment_id]) ) {
+			$step[$increment_id] = $ee->TMPL->fetch_param('step', 1);
 		}
 
-		$this->return_data = $this->_run();
+		if ( ! isset($increment[$increment_id]) ) {
+			$increment[$increment_id] = $start;
+		} else {
+			$increment[$increment_id] += $step[$increment_id];
+		}
+		$this->return_data = $increment[$increment_id];
+
 	}
 
 	/**
@@ -97,19 +100,6 @@ class Pvl_increment
 	}
 
 
-	private function _run()
-	{
-		if ( ! ($this->_increment = $this->_ee->session->cache(__CLASS__, $this->_id . '_increment')) ) {
-			$this->_increment = $this->_start;
-		} else {
-			$this->_increment = $this->_increment + $this->_step;
-		}
-		$this->_ee->session->set_cache(__CLASS__, $this->_id . '_increment', $this->_increment);
-		return $this->_increment;
-	}
-
-
-
 	/**
 	 * Usage
 	 *
@@ -122,7 +112,7 @@ class Pvl_increment
 	?>
 
 
-Pvl Increment v. 0.2
+Pvl Increment v. 0.3
 
 This plugin auto-increment itself on each call.
 
