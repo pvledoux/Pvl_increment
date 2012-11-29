@@ -74,7 +74,7 @@ class Pvl_increment
 		$no_increment   = $ee->TMPL->fetch_param('increment', TRUE);
 
 		// Init step
-		if (strtolower($no_increment) === 'no') {
+		if (strtolower($no_increment) !== 'no') {
 			if ( ! isset($step[$increment_id]) ) {
 				$step[$increment_id] = $ee->TMPL->fetch_param('step', 1);
 			}
