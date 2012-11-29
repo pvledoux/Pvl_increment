@@ -71,10 +71,10 @@ class Pvl_increment
 		$ee				=& get_instance();
 		$start			= $ee->TMPL->fetch_param('start', 1);
 		$increment_id	= $ee->TMPL->fetch_param('id', 'default_increment');
-		$count          = $ee->TMPL->fetch_param('count', FALSE);
+		$no_increment   = $ee->TMPL->fetch_param('increment', TRUE);
 
 		// Init step
-		if (strtolower($count) !== 'yes') {
+		if (strtolower($no_increment) === 'no') {
 			if ( ! isset($step[$increment_id]) ) {
 				$step[$increment_id] = $ee->TMPL->fetch_param('step', 1);
 			}
@@ -126,17 +126,17 @@ Usage:
 <p>3: {exp:pvl_increment id="my_id" random}</p>
 <p>4: {exp:pvl_increment id="my_id" random}</p>
 
-{if {exp:pvl_increment count="yes" random} > 10}
+{if {exp:pvl_increment increment="no" random} > 10}
 	do something...
 {/if}
 
 Parameters:
 
-random		is required in order to avoid tag caching (thanks to @Max_Lazar)
-id 			is optional: it allows you to add many incremental loop in the same template
-start="1"	is optional: define where to start incrementation (int, can be negative)
-step="1"	is optional: define the incrementation step (int, can be negative)
-count="yes" is optional: returns the current count and does not increment
+random		    is required in order to avoid tag caching (thanks to @Max_Lazar)
+id 			    is optional: it allows you to add many incremental loop in the same template
+start="1"	    is optional: define where to start incrementation (int, can be negative)
+step="1"	    is optional: define the incrementation step (int, can be negative)
+increment="no"  is optional: returns the current count and does not increment
 
 
 	 <?php
