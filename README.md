@@ -4,10 +4,29 @@ This plugin auto-increment itself on each call.
 
 ##Usage:
 
-  1: {exp:pvl_increment [start="1" step="1"]}
-  2: {exp:pvl_increment random}
-  3: {exp:pvl_increment random}
-  4: {exp:pvl_increment random}
+	{exp:pvl_increment [start="1" step="1"]}
+	{exp:pvl_increment random}
+	{exp:pvl_increment random}
+	{exp:pvl_increment random}
+	
+## Example:
+
+	{exp:pvl_increment start="0" step="1"}
+	{matrix_tag_pair}
+		{if matrix_column_name}
+			{exp:pvl_increment random}
+		{/if}
+
+		{if {exp:pvl_increment increment="no" random} > 9}
+			do this...
+		{if:else}
+			do that...
+		{/if}
+	{/matrix_tag_pair}
+	
+See: http://expressionengine.stackexchange.com/questions/698/variables-in-templates-w-o-php-enabled
+
+Thanks to @ginghamsburg for his contribution!
 
 ##Parameters:
 
