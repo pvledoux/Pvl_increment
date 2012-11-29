@@ -2,7 +2,7 @@
 
 $plugin_info = array(
 	'pi_name' => 'Pvl Increment',
-	'pi_version' => '0.3',
+	'pi_version' => '0.4',
 	'pi_author' =>'Pierre-Vincent Ledoux',
 	'pi_author_email' =>'ee-addons@pvledoux.be',
 	'pi_author_url' => 'http://twitter.com/pvledoux/',
@@ -71,16 +71,19 @@ class Pvl_increment
 		$ee				=& get_instance();
 		$start			= $ee->TMPL->fetch_param('start', 1);
 		$increment_id	= $ee->TMPL->fetch_param('id', 'default_increment');
+		$count          = $ee->TMPL->fetch_param('count', FALSE);
 
 		// Init step
-		if ( ! isset($step[$increment_id]) ) {
-			$step[$increment_id] = $ee->TMPL->fetch_param('step', 1);
-		}
+		if (strtolower($count) !== 'yes') {
+			if ( ! isset($step[$increment_id]) ) {
+				$step[$increment_id] = $ee->TMPL->fetch_param('step', 1);
+			}
 
-		if ( ! isset($increment[$increment_id]) ) {
-			$increment[$increment_id] = $start;
-		} else {
-			$increment[$increment_id] += $step[$increment_id];
+			if ( ! isset($increment[$increment_id]) ) {
+				$increment[$increment_id] = $start;
+			} else {
+				$increment[$increment_id] += $step[$increment_id];
+			}
 		}
 		$this->return_data = $increment[$increment_id];
 
@@ -118,10 +121,14 @@ This plugin auto-increment itself on each call.
 
 Usage:
 
-<p>1: {exp:pvl_increment [start="1" step="1"]}</p>
-<p>2: {exp:pvl_increment random}</p>
-<p>3: {exp:pvl_increment random}</p>
-<p>4: {exp:pvl_increment random}</p>
+<p>1: {exp:pvl_increment id="my_id" start="1" step="1"}</p>
+<p>2: {exp:pvl_increment id="my_id" random}</p>
+<p>3: {exp:pvl_increment id="my_id" random}</p>
+<p>4: {exp:pvl_increment id="my_id" random}</p>
+
+{if {exp:pvl_increment count="yes" random} > 10}
+	do something...
+{/if}
 
 Parameters:
 
@@ -129,6 +136,7 @@ random		is required in order to avoid tag caching (thanks to @Max_Lazar)
 id 			is optional: it allows you to add many incremental loop in the same template
 start="1"	is optional: define where to start incrementation (int, can be negative)
 step="1"	is optional: define the incrementation step (int, can be negative)
+count="yes" is optional: returns the current count and does not increment
 
 
 	 <?php
