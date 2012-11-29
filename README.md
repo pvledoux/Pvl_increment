@@ -13,20 +13,24 @@ This plugin auto-increment itself on each call.
 
 <table>
   <tr>
-    <td>**random**</td>
+    <td>random</td>
     <td>is required in order to avoid tag caching (thanks to @Max_Lazar)</td>
   </tr>
   <tr>
-    <td>**id**</td>
+    <td>id</td>
     <td>is optional: it allows you to add many incremental loop in the same template</td>
   </tr>
   <tr>
-    <td>**start="1"**</td>
+    <td>start="1"</td>
     <td>is optional: define where to start incrementation (int, can be negative)</td>
   </tr>
   <tr>
-    <td>**step="1"**</td>
+    <td>step="1"</td>
     <td>is optional: define the incrementation step (int, can be negative)</td>
+  </tr>
+  <tr>
+    <td>increment="yes/no"</td>
+    <td>is optional: returns the current count and does not increment (default: yes)</td>
   </tr>
 </table>
 
