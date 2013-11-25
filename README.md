@@ -1,4 +1,4 @@
-#Pvl Increment v. 0.3
+#Pvl Increment v. 1.0
 
 This plugin auto-increment itself on each call.
 
@@ -51,11 +51,15 @@ Thanks to @ginghamsburg for his contribution!
     <td>increment="yes/no"</td>
     <td>is optional: returns the current count and does not increment (default: yes)</td>
   </tr>
+  <tr>
+    <td>silent="yes/no"</td>
+    <td>is optional: do not output (default: no)</td>
+  </tr>
 </table>
 
 
 ------------------------------------------------------
-Copyright (c) 2012, Pv Ledoux
+Copyright (c) 2013, Pv Ledoux
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
