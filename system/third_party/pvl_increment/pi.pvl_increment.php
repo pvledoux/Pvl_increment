@@ -2,7 +2,7 @@
 
 $plugin_info = array(
 	'pi_name' => 'Pvl Increment',
-	'pi_version' => '0.4',
+	'pi_version' => '1.0',
 	'pi_author' =>'Pierre-Vincent Ledoux',
 	'pi_author_email' =>'ee-addons@pvledoux.be',
 	'pi_author_url' => 'http://twitter.com/pvledoux/',
@@ -12,7 +12,7 @@ $plugin_info = array(
   );
 
 /**
- * Copyright (c) 2012, Pv Ledoux
+ * Copyright (c) 2013, Pv Ledoux
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ $plugin_info = array(
 /**
  * Pvl_increment
  *
- * @copyright	Pv Ledoux 2012
+ * @copyright	Pv Ledoux 2013
  * @since		20 Dec 2011
  * @author		Pierre-Vincent Ledoux <ee-addons@pvledoux.be>
  * @link		http://www.twitter.com/pvledoux/
@@ -71,7 +71,8 @@ class Pvl_increment
 		$ee				=& get_instance();
 		$start			= $ee->TMPL->fetch_param('start', 1);
 		$increment_id	= $ee->TMPL->fetch_param('id', 'default_increment');
-		$no_increment   = $ee->TMPL->fetch_param('increment', TRUE);
+		$no_increment	= $ee->TMPL->fetch_param('increment', TRUE);
+		$silent			= $ee->TMPL->fetch_param('silent', 'no');
 
 		// Init step
 		if (strtolower($no_increment) !== 'no') {
@@ -85,7 +86,12 @@ class Pvl_increment
 				$increment[$increment_id] += $step[$increment_id];
 			}
 		}
-		$this->return_data = $increment[$increment_id];
+
+		if ($silent !== 'no') {
+			$this->return_data = NULL;
+		} else {
+			$this->return_data = $increment[$increment_id];
+		}
 
 	}
 
@@ -115,7 +121,7 @@ class Pvl_increment
 	?>
 
 
-Pvl Increment v. 0.3
+Pvl Increment v. 1.0
 
 This plugin auto-increment itself on each call.
 
@@ -132,11 +138,12 @@ Usage:
 
 Parameters:
 
-random		    is required in order to avoid tag caching (thanks to @Max_Lazar)
-id 			    is optional: it allows you to add many incremental loop in the same template
-start="1"	    is optional: define where to start incrementation (int, can be negative)
-step="1"	    is optional: define the incrementation step (int, can be negative)
-increment="no"  is optional: returns the current count and does not increment
+random			is required in order to avoid tag caching (thanks to @Max_Lazar)
+id 				is optional: it allows you to add many incremental loop in the same template
+start="1"		is optional: define where to start incrementation (int, can be negative)
+step="1"		is optional: define the incrementation step (int, can be negative)
+increment="no"	is optional: returns the current count and does not increment
+silent="yes"	is optional: do not output anything
 
 
 	 <?php
